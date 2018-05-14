@@ -76,10 +76,17 @@ function changePlugins(config) {
       if (name === null) {
         plugins.splice(i, 1);
         i--;
+      } else if (Array.isArray(name)) {
+        for (let j = name.length; j >= 0; --j) {
+          if (isArray) plugin[0] = name[j];
+          else plugin = name[j];
+          plugins.splice(i, 0, upgradeOptions(plugin));
+        }
+        plugins.splice(i + name.length, 1);
       } else {
         if (isArray) plugin[0] = name;
         else plugin = name;
-
+        
         plugins[i] = upgradeOptions(plugin);
       }
     }
